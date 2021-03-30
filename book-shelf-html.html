@@ -1,1 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <title>BookShelf</title>
+    
+</head>
+<body>
+    <h1 class="h">My Books Library</h1>
+    <div id="myModal" class="modal">
 
+        <!-- Modal content -->
+        <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>ُُEnter Book Details</p>
+        <form>
+            <label for="bname">Book Name:</label>
+            <input type="text" id="bname" name="BookName" placeholder="Book Name: ">
+            <label for="authname">Author Name:</label>
+            <input type="text" id="authname" name="authorname" placeholder="Book Author: ">
+            <label for="btype">Book Type:</label>
+            <input type="text" id="btype" name="booktype" placeholder="arabic, english, kids: ">
+            <label for="bimg">Book Image:</label>
+            <input type="file" id="bimg" name="bookimage" accept="image/*">
+          
+            <input type="submit" value="Add" id="addBtn">
+        </form>
+        </div>
+    
+    </div>
+
+    <script>
+        let lib = document.createElement("div");
+        lib.id = "lib-container";
+        document.body.appendChild(lib);
+
+        let arabicShelf = document.createElement("div");
+        arabicShelf.className = "shelf";
+        lib.appendChild(arabicShelf);
+        let englishShelf = document.createElement("div");
+        englishShelf.className = "shelf";
+        lib.appendChild(englishShelf);
+        let kidsShelf = document.createElement("div");
+        kidsShelf.className = "shelf";
+        lib.appendChild(kidsShelf);
+
+
+        let books = [
+            {
+                title: "Belal",
+                author: "Ahmed AlOmari",
+                image: "belal.jpg",
+                type: "arabic"
+            },
+            {
+                title: "ألواح ودسر",
+                author: "Ahmed AlOmari",
+                image: "alwah.jpg",
+                type: "arabic"
+            },
+            {
+                title: "القران فجر آخر",
+                author: "Ahmed AlOmari",
+                image: "quraan.jpeg",
+                type: "arabic"
+            },
+            {
+                title: "Rich Dad Poor Dad",
+                author: "Robert Kiyosaki",
+                image: "richPoor.jpg",
+                type: "english"
+            },
+            {
+                title: "Rich Dad Poor Dad",
+                author: "Ed Husain",
+                image: "islamistwhyijoin00husa.jfif",
+                type: "english"
+            },
+            {
+                title: "The Lost Village",
+                author: "Camilla Sten",
+                image: "theLostVillage.jpg",
+                type: "english"
+            },
+            {
+                title: "سلسلة أنا وأنت + سماء",
+                author: "جليل خزعل",
+                image: "sama.jpg",
+                type: "kids"
+            },
+            {
+                title: "بنت أم ولد",
+                author: "ناهد شوا",
+                image: "bentAmWlad.jpg",
+                type: "kids"
+            },
+            {
+                title: "أحبك أكثر",
+                author: "ناهد شوا",
+                image: "o7bkAkthar.jpg",
+                type: "kids"
+            }
+            ]
+        
+            
+        function addBook(books){
+            books.forEach(function(entry){
+            let book = document.createElement("div");
+            book.className = "book";
+            var imgBook = document.createElement("img");
+            imgBook.setAttribute('src', entry.image);
+            imgBook.setAttribute('height', '200px');
+            imgBook.setAttribute('width', '150px');
+            book.appendChild(imgBook);
+            let title = document.createElement("p");
+            title.innerText = "Book Name: " + entry.title;
+            book.appendChild(title);
+            let authorName = document.createElement("p");
+            authorName.innerText = "Author: " + entry.author;
+            book.appendChild(authorName);
+
+            // where to put the book?
+            switch(entry.type){
+                case "arabic":
+                    arabicShelf.appendChild(book);
+                    break;
+                case "english":
+                    englishShelf.appendChild(book);
+                    break;
+                case "kids":
+                    kidsShelf.appendChild(book);
+                defult:
+                    console.log("wrong type");
+            }
+            
+            });
+        }
+        
+        addBook(books);
+        
+        let addBookBtn = document.createElement("button");
+        addBookBtn.innerHTML = "Add New Book";
+        addBookBtn.className = "addBookBtn";
+        lib.id = "lib-container";
+        document.body.appendChild(addBookBtn);
+
+        var modal = document.getElementById("myModal");
+
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        addBookBtn.onclick = function() {
+        modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+        modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+        }
+
+        // When the user clicks the Add button, Add book to the list 
+        let addBtn = document.getElementById("addBtn");
+        let bname = document.getElementById("bname").value;
+        let authname = document.getElementById("authname").value;
+        let bimage = document.getElementById("bimg").value;
+        let btype = document.getElementById("btype").value;
+        addBtn.onclick = function() {
+            let newBook = [{
+                title: bname,
+                author: authname,
+                image: bimage,
+                type: btype
+            }];
+            addBook(newBook);
+            // modal.style.display = "none";
+        }
+    </script>
+
+    
+</body>
+</html>
